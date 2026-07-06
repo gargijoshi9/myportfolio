@@ -20,7 +20,7 @@ export default function ProjectsSection() {
             Things I've <span className="italic font-serif text-accent">built</span>, shipped, and broken.
           </h2>
           <p className="max-w-xl text-text-secondary text-sm md:text-base leading-relaxed">
-            A working set — half research, half product. The ones in the limelight are what I'd walk you through first.
+            A working set half research, half product. The ones in the limelight are what I'd walk you through first.
           </p>
         </div>
 

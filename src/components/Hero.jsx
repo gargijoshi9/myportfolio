@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
+import resumePdf from "../data/Gargi_Resume.pdf";
 
 export default function Hero() {
   const [blink, setBlink] = useState(true);
@@ -10,6 +11,22 @@ export default function Hero() {
     const interval = setInterval(() => {
       setBlink((prev) => !prev);
     }, 550);
+    return () => clearInterval(interval);
+  }, []);
+
+  const [typedText, setTypedText] = useState("");
+  const fullName = "Gargi Joshi";
+
+  // Typing effect for the name header
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setTypedText(fullName.slice(0, index + 1));
+      index++;
+      if (index >= fullName.length) {
+        clearInterval(interval);
+      }
+    }, 110);
     return () => clearInterval(interval);
   }, []);
 
@@ -58,13 +75,10 @@ export default function Hero() {
 
           {/* Main Title Name */}
           <div className="mb-6 select-none leading-none">
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white mb-2">
-              Gargi
-            </h1>
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white flex items-center flex-wrap">
-              <span>Joshi</span>
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-heading font-bold tracking-tight text-white flex items-center flex-wrap min-h-[48px] sm:min-h-[72px] md:min-h-[80px] lg:min-h-[110px]">
+              <span>{typedText}</span>
               <span 
-                className={`inline-block w-[12px] md:w-[16px] h-[48px] md:h-[64px] bg-hero-rose ml-3 ${
+                className={`inline-block w-[12px] md:w-[16px] h-[48px] sm:h-[64px] md:h-[72px] lg:h-[96px] bg-hero-rose ml-3 ${
                   blink ? "opacity-100" : "opacity-0"
                 }`}
                 style={{ transition: "opacity 100ms" }}
@@ -100,8 +114,8 @@ export default function Hero() {
             </a>
 
             <a
-              href="#" // placeholder
-              download
+              href={resumePdf}
+              download="Gargi_Joshi_Resume.pdf"
               className="px-6 py-2.5 border border-hero-rose/45 bg-transparent text-hero-rose font-mono text-xs font-semibold rounded-full hover:bg-hero-rose/10 transition-colors duration-200 flex items-center space-x-2"
             >
               <FileText size={13} className="text-hero-rose" />
@@ -133,7 +147,7 @@ export default function Hero() {
             </div>
 
             {/* Inner Profile Image Placeholder */}
-            <div className="aspect-[4/5] w-full bg-gradient-to-br from-[#3a1418] to-[#1e0a0c] rounded-xl flex flex-col items-center justify-center border border-hero-rose/10 relative overflow-hidden p-6 mb-5 group">
+            <div className="aspect-[4/4] w-full bg-gradient-to-br from-[#3a1418] to-[#1e0a0c] rounded-xl flex flex-col items-center justify-center border border-hero-rose/10 relative overflow-hidden p-6 mb-5 group">
               {/* GJ Text */}
               <div className="text-5xl sm:text-6xl font-serif italic text-hero-rose/85 tracking-wider select-none mb-3 transform group-hover:scale-105 transition-transform duration-300">
                 GJ
@@ -150,22 +164,22 @@ export default function Hero() {
             {/* Monospace Metadata Table */}
             <div className="font-mono text-xs space-y-2.5 text-hero-rose/75">
               <div className="flex justify-between items-center py-0.5 border-b border-hero-rose/5">
-                <span className="opacity-55">role</span>
+                <span className="opacity-70">role</span>
                 <span className="text-white font-medium">AI/ML + Full-Stack</span>
               </div>
               
               <div className="flex justify-between items-center py-0.5 border-b border-hero-rose/5">
-                <span className="opacity-55">cgpa</span>
+                <span className="opacity-70">cgpa</span>
                 <span className="text-white font-medium">9.415 / 10</span>
               </div>
               
               <div className="flex justify-between items-center py-0.5 border-b border-hero-rose/5">
-                <span className="opacity-55">base</span>
+                <span className="opacity-70">base</span>
                 <span className="text-white font-medium">Pune, IN</span>
               </div>
               
               <div className="flex justify-between items-center py-0.5">
-                <span className="opacity-55">status</span>
+                <span className="opacity-70">status</span>
                 <span className="text-[#22c55e] font-semibold flex items-center space-x-1.5">
                   <span className="w-1.5 h-1.5 bg-[#22c55e] rounded-full animate-ping inline-block" />
                   <span>open to internships</span>

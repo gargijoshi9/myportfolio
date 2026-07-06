@@ -4,9 +4,12 @@ export const featuredProjects = [
   title: "MSME-360",
   subtitle: "Unified Enterprise Platform",
   type: "Group Project",
-  problem: "Small businesses struggle with fragmented records, manual invoice processing, and disconnected business data across multiple systems.",
-  myMove: "Built the AI Command Center with a RAG pipeline using Groq API, implemented OCR-based invoice ingestion, engineered strict multi-tenant data isolation, and integrated dual-sync persistence between MongoDB and Google Sheets.",
-  outcome: "Delivered an AI-powered business automation platform that provides contextual insights from private business data while automatically synchronizing vendors, inventory, and invoices across MongoDB and Google Sheets.",
+  problem:
+    "Small businesses manage invoices, vendors, and inventory across disconnected systems, making operations slow and error-prone.",
+  myMove:
+    "Built an AI-powered RAG assistant, OCR invoice pipeline, secure multi-tenant architecture, and Google Sheets ↔ MongoDB synchronization.",
+  outcome:
+    "Automated invoice processing and delivered contextual business insights from private company data.",
   stack: [
     "React",
     "TypeScript",
@@ -26,9 +29,12 @@ export const featuredProjects = [
   title: "CineMatch",
   subtitle: "Semantic AI Movie Recommender",
   type: "Personal Project",
-  problem: "Traditional movie recommenders rely on keyword matching, leading to shallow recommendations while large similarity matrices are difficult to deploy on cloud platforms due to memory and file-size constraints.",
-  myMove: "Built a semantic recommendation engine using SentenceTransformers, engineered weighted feature embeddings for directors, cast, genres, and plot, compressed a 23M+ cell similarity matrix with BZ2 for cloud deployment, and implemented resilient OMDb poster fetching with 3-tier retry logic.",
-  outcome: "Delivered accurate context-aware movie recommendations for 4,800+ films through a deployed Streamlit application with optimized storage, fast inference, and reliable real-time poster retrieval.",
+  problem:
+    "Keyword-based recommenders miss movie context and large similarity models are difficult to deploy efficiently.",
+  myMove:
+    "Built a semantic recommendation engine using SentenceTransformers, optimized a 23M+ similarity matrix with BZ2, and added resilient OMDb poster fetching.",
+  outcome:
+    "Delivered fast, context-aware recommendations for 4,800+ movies through a deployed Streamlit application.",
   stack: [
     "Python",
     "SentenceTransformers",
@@ -102,9 +108,9 @@ export const secondaryProjects = [
 },
   {
   id: "07",
-  title: "Next-Gen Personal Loan AI Platform",
+  title: "Personal Loan AI Platform",
   subtitle: "Agentic AI for Loan Origination",
-  type: "Private Repository",
+  type: "Group Project",
   isPrivate: true,
   description: "An AI-powered conversational loan origination platform that automates eligibility assessment, KYC verification, personalized loan negotiation, and real-time sanction decisions through an intelligent multi-agent workflow.",
   stack: [

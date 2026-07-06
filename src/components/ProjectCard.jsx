@@ -85,7 +85,7 @@ export default function ProjectCard({ project, isFeatured }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 text-sm">
             <div>
               <span className="font-mono text-[10px] tracking-widest text-text-secondary/60 uppercase block mb-1.5">
-                Problem
+                Challenge
               </span>
               <p className="text-text-primary/85 leading-relaxed font-sans text-sm">
                 {problem}
@@ -93,7 +93,7 @@ export default function ProjectCard({ project, isFeatured }) {
             </div>
             <div>
               <span className="font-mono text-[10px] tracking-widest text-text-secondary/60 uppercase block mb-1.5">
-                My Move
+               Built
               </span>
               <p className="text-text-primary/85 leading-relaxed font-sans text-sm">
                 {myMove}
@@ -101,7 +101,7 @@ export default function ProjectCard({ project, isFeatured }) {
             </div>
             <div>
               <span className="font-mono text-[10px] tracking-widest text-text-secondary/60 uppercase block mb-1.5">
-                Outcome
+                Impact
               </span>
               <p className="text-text-primary/85 leading-relaxed font-sans text-sm">
                 {outcome}

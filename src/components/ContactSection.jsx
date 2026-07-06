@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Code, FileText, ArrowUpRight } from "lucide-react";
+import { Mail, Code, FileText, ArrowUpRight, Download } from "lucide-react";
 import resumePdf from "../data/Gargi_Resume.pdf";
 
 const GithubIcon = ({ className, ...props }) => (
@@ -38,6 +38,20 @@ const LinkedinIcon = ({ className, ...props }) => (
 
 export default function ContactSection() {
   const currentYear = new Date().getFullYear();
+
+  const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const handleContactClick = (e, contact) => {
+    if (contact.name === "/EMAIL") {
+      e.preventDefault();
+      navigator.clipboard.writeText("gargijoshi0902@gmail.com");
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2000);
+      
+      // Fallback: trigger mailto compose window
+      window.location.href = contact.href;
+    }
+  };
 
   const contacts = [
     {
@@ -102,15 +116,20 @@ export default function ContactSection() {
               target={contact.href.startsWith("mailto:") ? undefined : "_blank"}
               rel={contact.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
               download={contact.name === "/RESUME.PDF" ? "Gargi_Joshi_Resume.pdf" : undefined}
+              onClick={(e) => handleContactClick(e, contact)}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
               whileHover={{ y: -4, borderColor: "rgba(232, 180, 188, 0.6)", backgroundColor: "rgba(58, 20, 24, 0.9)" }}
-              className="flex flex-col items-center justify-center text-center p-6 border border-hero-rose/25 bg-hero-bg/50 rounded-xl transition-all duration-200 group h-[150px] relative"
+              className="flex flex-col items-center justify-center text-center p-6 border border-hero-rose/25 bg-hero-bg/50 rounded-xl transition-all duration-200 group h-[150px] relative cursor-pointer"
             >
               <div className="absolute top-4 right-4">
-                <ArrowUpRight className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
+                {contact.name === "/RESUME.PDF" ? (
+                  <Download className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
+                ) : (
+                  <ArrowUpRight className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
+                )}
               </div>
               <div className="p-2.5 bg-hero-bg border border-hero-rose/10 rounded-full mb-3">
                 {contact.icon}
@@ -120,7 +139,11 @@ export default function ContactSection() {
                   {contact.name}
                 </span>
                 <span className="text-hero-text/60 text-xs font-sans">
-                  {contact.desc}
+                  {contact.name === "/EMAIL" && copiedEmail ? (
+                    <span className="text-green-400 font-semibold font-mono">Copied to clipboard!</span>
+                  ) : (
+                    contact.desc
+                  )}
                 </span>
               </div>
             </motion.a>
