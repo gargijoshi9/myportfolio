@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Mail, Code, FileText, ArrowUpRight } from "lucide-react";
+import resumePdf from "../data/Gargi_Resume.pdf";
 
 const GithubIcon = ({ className, ...props }) => (
   <svg
@@ -41,31 +42,31 @@ export default function ContactSection() {
   const contacts = [
     {
       name: "/EMAIL",
-      href: "mailto:gargijoshi.pict@gmail.com", // sensible default or placeholder
+      href: "mailto:gargijoshi0902@gmail.com", // sensible default or placeholder
       icon: <Mail className="w-5 h-5 text-hero-rose" />,
       desc: "Get in touch directly"
     },
     {
       name: "/LINKEDIN",
-      href: "https://linkedin.com/in/gargi-joshi-", // placeholder
+      href: "https://www.linkedin.com/in/gargi-joshi-a9246b331/", // placeholder
       icon: <LinkedinIcon className="w-5 h-5 text-hero-rose" />,
       desc: "Connect professionally"
     },
     {
       name: "/GITHUB",
-      href: "https://github.com/gargi2506", // placeholder
+      href: "https://github.com/gargijoshi9", // placeholder
       icon: <GithubIcon className="w-5 h-5 text-hero-rose" />,
       desc: "Explore repositories"
     },
-    {
-      name: "/LEETCODE",
-      href: "https://leetcode.com/u/gargi_25/", // placeholder
-      icon: <Code className="w-5 h-5 text-hero-rose" />,
-      desc: "Problem solving profile"
-    },
+    // {
+    //   name: "/LEETCODE",
+    //   href: "https://leetcode.com/u/gargi_25/", // placeholder
+    //   icon: <Code className="w-5 h-5 text-hero-rose" />,
+    //   desc: "Problem solving profile"
+    // },
     {
       name: "/RESUME.PDF",
-      href: "#", // placeholder
+      href: resumePdf,
       icon: <FileText className="w-5 h-5 text-hero-rose" />,
       desc: "Download curriculum vitae"
     }
@@ -76,7 +77,7 @@ export default function ContactSection() {
       {/* Container */}
       <div className="max-w-6xl mx-auto flex flex-col justify-between min-h-[500px]">
         {/* Contact Info Header */}
-        <div className="mb-12">
+        <div className="mb-12 text-center md:text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -86,32 +87,33 @@ export default function ContactSection() {
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4 tracking-tight">
               Let's build something <span className="italic font-serif text-hero-rose">odd</span> together.
             </h2>
-            <p className="max-w-xl text-hero-rose/80 font-sans text-base md:text-lg leading-relaxed">
-              Research collaborations, internship intros, or a chat about tea and transformers — my inbox is open.
+            <p className="max-w-xl text-hero-rose/80 font-sans text-base md:text-lg leading-relaxed mx-auto md:mx-0">
+              Research collaborations, internship intros, or a chat about Tea & Cats my inbox is open.
             </p>
           </motion.div>
         </div>
 
-        {/* Links Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-20">
+        {/* Links Grid (Balanced 4-column layout centered) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-20 max-w-5xl w-full mx-auto">
           {contacts.map((contact, index) => (
             <motion.a
               key={contact.name}
               href={contact.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={contact.href.startsWith("mailto:") ? undefined : "_blank"}
+              rel={contact.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+              download={contact.name === "/RESUME.PDF" ? "Gargi_Joshi_Resume.pdf" : undefined}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
               whileHover={{ y: -4, borderColor: "rgba(232, 180, 188, 0.6)", backgroundColor: "rgba(58, 20, 24, 0.9)" }}
-              className="flex flex-col justify-between p-5 border border-hero-rose/25 bg-hero-bg/50 rounded-xl transition-all duration-200 group h-[140px]"
+              className="flex flex-col items-center justify-center text-center p-6 border border-hero-rose/25 bg-hero-bg/50 rounded-xl transition-all duration-200 group h-[150px] relative"
             >
-              <div className="flex justify-between items-start">
-                <div className="p-2.5 bg-hero-bg border border-hero-rose/10 rounded-lg">
-                  {contact.icon}
-                </div>
-                <ArrowUpRight className="w-5 h-5 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
+              <div className="absolute top-4 right-4">
+                <ArrowUpRight className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
+              </div>
+              <div className="p-2.5 bg-hero-bg border border-hero-rose/10 rounded-full mb-3">
+                {contact.icon}
               </div>
               <div>
                 <span className="font-mono text-sm font-semibold tracking-wider text-hero-rose block mb-1">

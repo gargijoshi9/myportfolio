@@ -1,7 +1,7 @@
 export const achievements = [
   {
     title: "IEEE TechRush Hackathon — 1st Place",
-    description: "Language Learning App. Recognized for innovation and execution.",
+    description: "Language Learning App (ORANGE) Recognized for innovation and execution.",
     iconType: "trophy" // custom handling for trophy icon
   },
   {

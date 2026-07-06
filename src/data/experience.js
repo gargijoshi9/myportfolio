@@ -5,12 +5,12 @@ export const experiences = [
     type: "Health-tech startup, Remote",
     duration: "Nov 2025 – Jan 2026",
     bullets: [
-      "Built 13+ responsive webpages using HTML, CSS, JS & Wix, serving 500+ monthly users.",
+      "Built 13+ responsive webpages using JS & Wix, serving 500+ monthly users.",
       "Implemented custom JS & backend logic beyond Wix for tailored health-tech UX.",
       "Executed on-page SEO: meta tags, structured data, page speed optimizations.",
       "Integrated PayPal & RazorPay gateways for secure subscription transactions.",
       "Ensured DPDP Act compliance and health data privacy throughout.",
-      "Conducted cross-platform QA across 5+ devices/browsers, reducing UI issues by 40%."
+      "Conducted cross-platform QA across 6+ devices/browsers, reducing UI issues by 40%."
     ]
   },
   {
