@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Power, PowerOff } from "lucide-react";
 import { catTheme as importedCatTheme } from "../../config/catTheme";
@@ -8,22 +8,64 @@ import CatPopup from "./CatPopup";
 export default function Cat({ isAwake, onToggleWake }) {
   const [showPopup, setShowPopup] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const catRef = useRef(null);
+
+  // Pupil tracking mouse cursor relative to cat head center
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (!catRef.current) return;
+      
+      const rect = catRef.current.getBoundingClientRect();
+      // Center of the cat head relative to viewport
+      const catX = rect.left + rect.width / 2;
+      // Head center Y is at 52px inside the 140px viewbox
+      const catY = rect.top + (rect.height * 52) / 140;
+      
+      const dx = e.clientX - catX;
+      const dy = e.clientY - catY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist === 0) return;
+
+      // Max pupil displacement in pixels within the eye socket
+      const maxDisplacement = 2.0;
+      const force = Math.min(maxDisplacement, dist / 40);
+
+      const moveX = (dx / dist) * force;
+      const moveY = (dy / dist) * force;
+
+      setMousePos({ x: moveX, y: moveY });
+    };
+
+    if (isAwake) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [isAwake]);
 
   const handleClick = () => {
     if (!isAwake) return;
     setIsJumping(true);
     setShowPopup(true);
-    // Reset jump animation after completion
     setTimeout(() => {
       setIsJumping(false);
     }, 500);
   };
 
-  // Extract variables
-  const { bodyColor, outlineColor, accentColor, size } = importedCatTheme;
+  const {
+    bodyColor,
+    bellyColor,
+    outlineColor,
+    accentColor,
+    platformTop,
+    platformHighlight,
+    platformBase,
+    size
+  } = importedCatTheme;
 
   return (
-    <div className="fixed bottom-6 left-6 z-40 flex flex-col items-start gap-3">
+    <div ref={catRef} className="fixed bottom-6 left-6 z-40 flex flex-col items-center gap-3">
       {/* Fact Popup bubble */}
       <AnimatePresence>
         {isAwake && showPopup && (
@@ -33,7 +75,7 @@ export default function Cat({ isAwake, onToggleWake }) {
 
       {/* Cat Mascot Frame */}
       <div className="relative">
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isAwake ? (
             <motion.div
               key="active-cat"
@@ -44,107 +86,93 @@ export default function Cat({ isAwake, onToggleWake }) {
               className="cursor-pointer select-none origin-bottom relative"
               style={{ width: size, height: size }}
             >
-              {/* Custom White Cat SVG */}
+              {/* Minimalist 2D Vector Cat SVG */}
               <svg
                 viewBox="0 0 140 140"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-full"
               >
-                {/* Laptop / Stack of books platform */}
-                <rect x="15" y="115" width="110" height="8" rx="2" fill="#E8DDD4" stroke={outlineColor} strokeWidth="2" />
-                <line x1="20" y1="123" x2="120" y2="123" stroke={outlineColor} strokeWidth="2.5" />
-                
-                {/* Tail */}
-                <motion.path
-                  d="M 105,95 C 115,95 125,80 120,60 C 117,45 110,40 108,50"
-                  stroke={outlineColor}
-                  strokeWidth="6"
-                  strokeLinecap="round"
+                {/* Drop shadow under the platform */}
+                <ellipse cx="70" cy="132" rx="52" ry="4" fill={outlineColor} opacity="0.15" />
+
+                {/* Dark, Tiered Rectangular Base Platform */}
+                <rect x="16" y="123" width="108" height="9" rx="3.5" fill={platformBase} stroke={outlineColor} strokeWidth="2" />
+                <rect x="24" y="115" width="92" height="9" rx="2.5" fill={platformTop} stroke={outlineColor} strokeWidth="1.8" />
+                <rect x="32" y="117.5" width="34" height="2" rx="0.8" fill={platformHighlight} opacity="0.6" />
+
+                {/* Thick curved tail extending outward and upward to its left side */}
+                <motion.g
                   variants={catAnimations}
                   animate="tailWag"
-                  className="origin-[105px_95px]"
-                />
+                  className="origin-[46px_96px]"
+                >
+                  {/* Outline of tail */}
+                  <path
+                    d="M 46,96 Q 22,96 22,76 Q 22,56 34,56"
+                    stroke={outlineColor}
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  {/* Inner fill of tail */}
+                  <path
+                    d="M 46,96 Q 22,96 22,76 Q 22,56 34,56"
+                    stroke={bodyColor}
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                </motion.g>
 
-                {/* Body */}
-                <path
-                  d="M 35,115 C 35,70 65,70 65,115 Z"
-                  fill={bodyColor}
-                  stroke={outlineColor}
-                  strokeWidth="3"
-                />
-                
-                {/* Back / Main Body curves */}
-                <path
-                  d="M 60,115 C 60,80 110,80 110,115 Z"
-                  fill={bodyColor}
-                  stroke={outlineColor}
-                  strokeWidth="3"
-                />
+                {/* Large plump circular body shape */}
+                <ellipse cx="70" cy="94" rx="28" ry="24" fill={bodyColor} stroke={outlineColor} strokeWidth="3" />
+                {/* Lighter brown oval patch on its belly */}
+                <ellipse cx="70" cy="98" rx="16" ry="12" fill={bellyColor} />
 
-                {/* Head */}
-                <circle cx="50" cy="65" r="28" fill={bodyColor} stroke={outlineColor} strokeWidth="3" />
+                {/* Tiny, stubby paws at the very bottom */}
+                <ellipse cx="56" cy="116" rx="5" ry="3" fill={bodyColor} stroke={outlineColor} strokeWidth="2.5" />
+                <ellipse cx="84" cy="116" rx="5" ry="3" fill={bodyColor} stroke={outlineColor} strokeWidth="2.5" />
 
-                {/* Ears */}
+                {/* Smaller circular head stacked on body */}
+                <circle cx="70" cy="52" r="22" fill={bodyColor} stroke={outlineColor} strokeWidth="3" />
+
+                {/* Sharply pointed ears with reddish-pink inner triangles */}
                 {/* Left Ear */}
-                <polygon
-                  points="26,45 18,12 44,38"
-                  fill={bodyColor}
-                  stroke={outlineColor}
-                  strokeWidth="3"
-                  strokeLinejoin="round"
-                />
-                <polygon
-                  points="28,42 22,18 40,36"
-                  fill={accentColor}
-                />
+                <polygon points="52,36 44,12 63,28" fill={bodyColor} stroke={outlineColor} strokeWidth="3" strokeLinejoin="round" />
+                <polygon points="52,33 47,19 60,28" fill={accentColor} />
 
                 {/* Right Ear */}
-                <polygon
-                  points="74,45 82,12 56,38"
-                  fill={bodyColor}
-                  stroke={outlineColor}
-                  strokeWidth="3"
-                  strokeLinejoin="round"
-                />
-                <polygon
-                  points="72,42 78,18 60,36"
-                  fill={accentColor}
-                />
+                <polygon points="88,36 96,12 77,28" fill={bodyColor} stroke={outlineColor} strokeWidth="3" strokeLinejoin="round" />
+                <polygon points="88,33 93,19 80,28" fill={accentColor} />
 
-                {/* Collar */}
+                {/* Large, wide-set white eyes with small black pupils (Follows cursor) */}
+                <motion.g variants={catAnimations} animate="blink" className="origin-[56px_52px]">
+                  <circle cx="56" cy="52" r="7" fill="#FFFFFF" stroke={outlineColor} strokeWidth="1.5" />
+                  <circle cx={56 + mousePos.x} cy={52 + mousePos.y} r="2.2" fill={outlineColor} />
+                </motion.g>
+                <motion.g variants={catAnimations} animate="blink" className="origin-[84px_52px]">
+                  <circle cx="84" cy="52" r="7" fill="#FFFFFF" stroke={outlineColor} strokeWidth="1.5" />
+                  <circle cx={84 + mousePos.x} cy={52 + mousePos.y} r="2.2" fill={outlineColor} />
+                </motion.g>
+
+                {/* Tiny pink nose & small pink 'w'-shaped smile */}
+                <polygon points="70,57 68,54 72,54" fill={accentColor} />
                 <path
-                  d="M 32,83 Q 50,92 68,83"
+                  d="M 66,60 Q 68,63 70,60 Q 72,63 74,60"
                   stroke={accentColor}
-                  strokeWidth="4"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
+                  fill="none"
                 />
-                <circle cx="50" cy="88" r="3.5" fill="#E8B4BC" stroke={outlineColor} strokeWidth="1" />
 
-                {/* Eyes */}
-                {/* Left Eye Container */}
-                <motion.g variants={catAnimations} animate="blink" className="origin-[38px_63px]">
-                  <ellipse cx="38" cy="63" rx="3.5" ry="5" fill={outlineColor} />
-                  <circle cx="36.5" cy="61" r="1" fill="#FFFFFF" />
-                </motion.g>
-
-                {/* Right Eye Container */}
-                <motion.g variants={catAnimations} animate="blink" className="origin-[62px_63px]">
-                  <ellipse cx="62" cy="63" rx="3.5" ry="5" fill={outlineColor} />
-                  <circle cx="60.5" cy="61" r="1" fill="#FFFFFF" />
-                </motion.g>
-
-                {/* Nose & Whiskers */}
-                <polygon points="50,71 47,68 53,68" fill={accentColor} />
-                <path d="M 48,74 Q 50,77 52,74" stroke={outlineColor} strokeWidth="1.5" strokeLinecap="round" />
-                
-                {/* Whiskers */}
-                {/* Left */}
-                <line x1="22" y1="70" x2="8" y2="72" stroke={outlineColor} strokeWidth="1.5" />
-                <line x1="22" y1="76" x2="6" y2="80" stroke={outlineColor} strokeWidth="1.5" />
-                {/* Right */}
-                <line x1="78" y1="70" x2="92" y2="72" stroke={outlineColor} strokeWidth="1.5" />
-                <line x1="78" y1="76" x2="94" y2="80" stroke={outlineColor} strokeWidth="1.5" />
+                {/* Two thin white whiskers extending from each cheek */}
+                {/* Left cheek */}
+                <line x1="44" y1="55" x2="30" y2="54" stroke="#FFFFFF" strokeWidth="1.2" />
+                <line x1="44" y1="59" x2="28" y2="60" stroke="#FFFFFF" strokeWidth="1.2" />
+                {/* Right cheek */}
+                <line x1="96" y1="55" x2="110" y2="54" stroke="#FFFFFF" strokeWidth="1.2" />
+                <line x1="96" y1="59" x2="112" y2="60" stroke="#FFFFFF" strokeWidth="1.2" />
               </svg>
             </motion.div>
           ) : (
@@ -160,28 +188,59 @@ export default function Cat({ isAwake, onToggleWake }) {
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-full"
               >
-                {/* Base Laptop */}
-                <rect x="15" y="115" width="110" height="8" rx="2" fill="#E8DDD4" stroke={outlineColor} strokeWidth="2" />
-                
-                {/* Curled Sleeping Shape */}
+                {/* Tiered rectangular base */}
+                <rect x="16" y="123" width="108" height="9" rx="3.5" fill={platformBase} stroke={outlineColor} strokeWidth="2" />
+                <rect x="24" y="115" width="92" height="9" rx="2.5" fill={platformTop} stroke={outlineColor} strokeWidth="1.8" />
+
+                {/* Curled sleeping blob */}
                 <path
-                  d="M 30,115 C 30,85 110,85 110,115 Z"
+                  d="M 32,115
+                     C 28,92 48,82 70,82
+                     C 92,82 112,92 108,115
+                     Z"
                   fill={bodyColor}
                   stroke={outlineColor}
                   strokeWidth="3"
+                  strokeLinejoin="round"
                 />
-                {/* Curled Tail */}
+                {/* ears peeking */}
+                <path d="M 46,84 Q 43,72 52,81 Z" fill={bodyColor} stroke={outlineColor} strokeWidth="2.5" strokeLinejoin="round" />
+                <path d="M 94,84 Q 97,72 88,81 Z" fill={bodyColor} stroke={outlineColor} strokeWidth="2.5" strokeLinejoin="round" />
+
+                {/* Curled tail wrapped around */}
                 <path
-                  d="M 105,115 C 105,100 120,105 115,115"
-                  stroke={outlineColor}
-                  strokeWidth="4"
+                  d="M 102,115 C 105,98 120,100 116,115"
+                  stroke={bodyColor}
+                  strokeWidth="7"
                   strokeLinecap="round"
                   fill="none"
                 />
-                {/* Sleeping Closed Eyes (Zs) */}
-                <path d="M 45,95 L 53,95 L 45,103 L 53,103" stroke={outlineColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M 62,87 L 68,87 L 62,93 L 68,93" stroke={outlineColor} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M 75,81 L 79,81 L 75,85 L 79,85" stroke={outlineColor} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+
+                {/* Sleeping closed eyes (pink accent) */}
+                <path d="M 52,96 Q 57,100 62,96" stroke={accentColor} strokeWidth="2" strokeLinecap="round" fill="none" />
+                <path d="M 78,96 Q 83,100 88,96" stroke={accentColor} strokeWidth="2" strokeLinecap="round" fill="none" />
+
+                {/* Zzz */}
+                <motion.path
+                  d="M 82,72 L 88,72 L 82,78 L 88,78"
+                  stroke={accentColor}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                  animate={{ y: [0, -3, 0], opacity: [0.6, 1, 0.6] }}
+                  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                />
+                <motion.path
+                  d="M 94,62 L 100,62 L 94,68 L 100,68"
+                  stroke={accentColor}
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                  animate={{ y: [0, -4, 0], opacity: [0.5, 1, 0.5] }}
+                  transition={{ repeat: Infinity, duration: 2, delay: 0.6, ease: "easeInOut" }}
+                />
               </svg>
             </motion.div>
           )}
