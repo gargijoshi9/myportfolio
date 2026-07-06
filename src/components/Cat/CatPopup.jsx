@@ -48,7 +48,7 @@ export default function CatPopup({ onClose }) {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.85, y: 16 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
-      className="absolute bottom-24 left-6 z-40 bg-white rounded-2xl shadow-xl border border-black/5 w-[290px] p-5 flex flex-col gap-4"
+      className="absolute bottom-24 left-6 z-40 bg-white/85 backdrop-blur-md rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.12)] border border-white/40 w-[290px] p-5 flex flex-col gap-4"
     >
       {/* Header */}
       <div className="flex justify-between items-center">
@@ -71,7 +71,7 @@ export default function CatPopup({ onClose }) {
         &ldquo;{fact}&rdquo;
       </p>
 
-      <div className="border-t border-gray-100" />
+      <div className="border-t border-gray-200/50" />
 
       {/* Yarn Play Area */}
       <div
@@ -81,16 +81,15 @@ export default function CatPopup({ onClose }) {
         <span className="text-[10px] font-mono text-gray-400 uppercase select-none">
           drag the yarn →
           {playCount > 0 && (
-            <span className="ml-1 text-gray-500">({playCount})</span>
+            <span className="ml-1 text-gray-500 font-bold">({playCount})</span>
           )}
         </span>
 
         {playCount >= 5 && (
           <span
-            className="absolute -top-1 left-1/2 -translate-x-1/2 text-[9px] flex items-center gap-0.5 animate-bounce"
+            className="absolute -top-1 left-1/2 -translate-x-1/2 text-[9px] flex items-center gap-0.5 animate-bounce font-bold"
             style={{ color: accentColor }}
           >
-            <Trophy size={10} /> Playful Cat!
           </span>
         )}
 
@@ -106,7 +105,7 @@ export default function CatPopup({ onClose }) {
           </motion.div>
         )}
 
-        {/* Draggable Yarn Ball */}
+        {/* Draggable Glossy Emoji-Style Yarn Ball (🧶) */}
         <motion.div
           drag
           dragConstraints={containerRef}
@@ -116,12 +115,23 @@ export default function CatPopup({ onClose }) {
           className="relative w-11 h-11 rounded-full cursor-grab active:cursor-grabbing shadow-md select-none shrink-0"
         >
           <svg viewBox="0 0 44 44" className="w-full h-full">
-            <circle cx="22" cy="22" r="21" fill={yarnColor} />
-            <path d="M 4,18 Q 22,6 40,18" stroke={yarnHighlight} strokeWidth="2" fill="none" opacity="0.7" />
-            <path d="M 4,26 Q 22,38 40,26" stroke={yarnHighlight} strokeWidth="2" fill="none" opacity="0.7" />
-            <path d="M 8,10 Q 22,22 8,34" stroke={yarnHighlight} strokeWidth="2" fill="none" opacity="0.5" />
-            <path d="M 36,10 Q 22,22 36,34" stroke={yarnHighlight} strokeWidth="2" fill="none" opacity="0.5" />
-            <ellipse cx="15" cy="14" rx="4" ry="2.5" fill="#FFFFFF" opacity="0.25" />
+            <defs>
+              {/* Radial gradient for glossy 3D yarn ball sphere */}
+              <radialGradient id="yarnBallGrad" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stopColor="#FFA4B2" />
+                <stop offset="65%" stopColor="#884049ff" />
+                <stop offset="100%" stopColor="#672c33ff" />
+              </radialGradient>
+            </defs>
+            {/* Base Sphere */}
+            <circle cx="22" cy="22" r="21" fill="url(#yarnBallGrad)" />
+            {/* Yarn thread details */}
+            <path d="M 4,18 Q 22,6 40,18" stroke={yarnHighlight} strokeWidth="1.8" fill="none" opacity="0.65" />
+            <path d="M 4,26 Q 22,38 40,26" stroke={yarnHighlight} strokeWidth="1.8" fill="none" opacity="0.65" />
+            <path d="M 8,10 Q 22,22 8,34" stroke={yarnHighlight} strokeWidth="1.8" fill="none" opacity="0.45" />
+            <path d="M 36,10 Q 22,22 36,34" stroke={yarnHighlight} strokeWidth="1.8" fill="none" opacity="0.45" />
+            {/* Soft sphere gloss reflection */}
+            <ellipse cx="14" cy="14" rx="4.5" ry="2.2" fill="#FFFFFF" opacity="0.38" transform="rotate(-30 14 14)" />
           </svg>
         </motion.div>
       </div>

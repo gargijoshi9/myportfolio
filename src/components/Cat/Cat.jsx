@@ -17,9 +17,7 @@ export default function Cat({ isAwake, onToggleWake }) {
       if (!catRef.current) return;
       
       const rect = catRef.current.getBoundingClientRect();
-      // Center of the cat head relative to viewport
       const catX = rect.left + rect.width / 2;
-      // Head center Y is at 52px inside the 140px viewbox
       const catY = rect.top + (rect.height * 52) / 140;
       
       const dx = e.clientX - catX;
@@ -28,9 +26,8 @@ export default function Cat({ isAwake, onToggleWake }) {
 
       if (dist === 0) return;
 
-      // Max pupil displacement in pixels within the eye socket
-      const maxDisplacement = 2.0;
-      const force = Math.min(maxDisplacement, dist / 40);
+      const maxDisplacement = 2.2;
+      const force = Math.min(maxDisplacement, dist / 35);
 
       const moveX = (dx / dist) * force;
       const moveY = (dy / dist) * force;
@@ -86,28 +83,61 @@ export default function Cat({ isAwake, onToggleWake }) {
               className="cursor-pointer select-none origin-bottom relative"
               style={{ width: size, height: size }}
             >
-              {/* Minimalist 2D Vector Cat SVG */}
+              {/* Glossy 2D Vector Emoji Cat SVG */}
               <svg
                 viewBox="0 0 140 140"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-full"
               >
+                <defs>
+                  {/* Fur Radial Gradient for 3D Volume */}
+                  <radialGradient id="furGradient" cx="45%" cy="40%" r="60%" fx="35%" fy="30%">
+                    <stop offset="0%" stopColor="#3E2227" />
+                    <stop offset="70%" stopColor="#221215" />
+                    <stop offset="100%" stopColor="#120709" />
+                  </radialGradient>
+
+                  {/* Belly Shading Gradient */}
+                  <linearGradient id="bellyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#6C3E43" />
+                    <stop offset="100%" stopColor="#482529" />
+                  </linearGradient>
+
+                  {/* Reddish-pink Inner Ear Gradient */}
+                  <linearGradient id="earGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#E5A9B1" />
+                    <stop offset="100%" stopColor="#BE7B84" />
+                  </linearGradient>
+
+                  {/* Platform Base Gradients */}
+                  <linearGradient id="platTopGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#6B242C" />
+                    <stop offset="100%" stopColor="#3E1116" />
+                  </linearGradient>
+                  
+                  {/* Gloss Highlight Overlay */}
+                  <linearGradient id="glossHighlight" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.15" />
+                    <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+
                 {/* Drop shadow under the platform */}
                 <ellipse cx="70" cy="132" rx="52" ry="4" fill={outlineColor} opacity="0.15" />
 
                 {/* Dark, Tiered Rectangular Base Platform */}
                 <rect x="16" y="123" width="108" height="9" rx="3.5" fill={platformBase} stroke={outlineColor} strokeWidth="2" />
-                <rect x="24" y="115" width="92" height="9" rx="2.5" fill={platformTop} stroke={outlineColor} strokeWidth="1.8" />
+                <rect x="24" y="115" width="92" height="9" rx="2.5" fill="url(#platTopGrad)" stroke={outlineColor} strokeWidth="1.8" />
                 <rect x="32" y="117.5" width="34" height="2" rx="0.8" fill={platformHighlight} opacity="0.6" />
 
-                {/* Thick curved tail extending outward and upward to its left side */}
+                {/* Tail with wagging animation */}
                 <motion.g
                   variants={catAnimations}
                   animate="tailWag"
                   className="origin-[46px_96px]"
                 >
-                  {/* Outline of tail */}
                   <path
                     d="M 46,96 Q 22,96 22,76 Q 22,56 34,56"
                     stroke={outlineColor}
@@ -115,64 +145,69 @@ export default function Cat({ isAwake, onToggleWake }) {
                     strokeLinecap="round"
                     fill="none"
                   />
-                  {/* Inner fill of tail */}
                   <path
                     d="M 46,96 Q 22,96 22,76 Q 22,56 34,56"
-                    stroke={bodyColor}
-                    strokeWidth="4"
+                    stroke="url(#furGradient)"
+                    strokeWidth="4.5"
                     strokeLinecap="round"
                     fill="none"
                   />
                 </motion.g>
 
-                {/* Large plump circular body shape */}
-                <ellipse cx="70" cy="94" rx="28" ry="24" fill={bodyColor} stroke={outlineColor} strokeWidth="3" />
-                {/* Lighter brown oval patch on its belly */}
-                <ellipse cx="70" cy="98" rx="16" ry="12" fill={bellyColor} />
+                {/* Plump circular body shape with 3D gradient */}
+                <ellipse cx="70" cy="94" rx="28" ry="24" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="3" />
+                {/* Lighter brown oval patch on belly */}
+                <ellipse cx="70" cy="98" rx="16" ry="12" fill="url(#bellyGrad)" />
 
-                {/* Tiny, stubby paws at the very bottom */}
-                <ellipse cx="56" cy="116" rx="5" ry="3" fill={bodyColor} stroke={outlineColor} strokeWidth="2.5" />
-                <ellipse cx="84" cy="116" rx="5" ry="3" fill={bodyColor} stroke={outlineColor} strokeWidth="2.5" />
+                {/* Tiny, stubby paws at the bottom */}
+                <ellipse cx="56" cy="116" rx="5" ry="3" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="2" />
+                <ellipse cx="84" cy="116" rx="5" ry="3" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="2" />
 
-                {/* Smaller circular head stacked on body */}
-                <circle cx="70" cy="52" r="22" fill={bodyColor} stroke={outlineColor} strokeWidth="3" />
+                {/* Stacked circular head with 3D gradient */}
+                <circle cx="70" cy="52" r="22" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="3" />
 
                 {/* Sharply pointed ears with reddish-pink inner triangles */}
                 {/* Left Ear */}
-                <polygon points="52,36 44,12 63,28" fill={bodyColor} stroke={outlineColor} strokeWidth="3" strokeLinejoin="round" />
-                <polygon points="52,33 47,19 60,28" fill={accentColor} />
+                <polygon points="52,36 44,12 63,28" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="3" strokeLinejoin="round" />
+                <polygon points="52,33 47,19 60,28" fill="url(#earGrad)" />
 
                 {/* Right Ear */}
-                <polygon points="88,36 96,12 77,28" fill={bodyColor} stroke={outlineColor} strokeWidth="3" strokeLinejoin="round" />
-                <polygon points="88,33 93,19 80,28" fill={accentColor} />
+                <polygon points="88,36 96,12 77,28" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="3" strokeLinejoin="round" />
+                <polygon points="88,33 93,19 80,28" fill="url(#earGrad)" />
 
-                {/* Large, wide-set white eyes with small black pupils (Follows cursor) */}
+                {/* Glossy Cheek Blushes */}
+                <ellipse cx="53" cy="61" rx="3.5" ry="1.8" fill={accentColor} opacity="0.35" />
+                <ellipse cx="87" cy="61" rx="3.5" ry="1.8" fill={accentColor} opacity="0.35" />
+
+                {/* Large, wide-set white eyes with glossy black pupils (Follows cursor) */}
                 <motion.g variants={catAnimations} animate="blink" className="origin-[56px_52px]">
                   <circle cx="56" cy="52" r="7" fill="#FFFFFF" stroke={outlineColor} strokeWidth="1.5" />
-                  <circle cx={56 + mousePos.x} cy={52 + mousePos.y} r="2.2" fill={outlineColor} />
+                  <circle cx={56 + mousePos.x} cy={52 + mousePos.y} r="2.4" fill={outlineColor} />
+                  {/* Glossy Reflection Spot */}
+                  <circle cx={54.8 + mousePos.x} cy={50.8 + mousePos.y} r="0.9" fill="#FFFFFF" />
                 </motion.g>
                 <motion.g variants={catAnimations} animate="blink" className="origin-[84px_52px]">
                   <circle cx="84" cy="52" r="7" fill="#FFFFFF" stroke={outlineColor} strokeWidth="1.5" />
-                  <circle cx={84 + mousePos.x} cy={52 + mousePos.y} r="2.2" fill={outlineColor} />
+                  <circle cx={84 + mousePos.x} cy={52 + mousePos.y} r="2.4" fill={outlineColor} />
+                  {/* Glossy Reflection Spot */}
+                  <circle cx={82.8 + mousePos.x} cy={50.8 + mousePos.y} r="0.9" fill="#FFFFFF" />
                 </motion.g>
 
-                {/* Tiny pink nose & small pink 'w'-shaped smile */}
-                <polygon points="70,57 68,54 72,54" fill={accentColor} />
+                {/* Tiny pink nose & pink 'w'-shaped smile */}
+                <polygon points="70,57 68,54 72,54" fill="url(#earGrad)" />
                 <path
                   d="M 66,60 Q 68,63 70,60 Q 72,63 74,60"
-                  stroke={accentColor}
+                  stroke="url(#earGrad)"
                   strokeWidth="2.2"
                   strokeLinecap="round"
                   fill="none"
                 />
 
                 {/* Two thin white whiskers extending from each cheek */}
-                {/* Left cheek */}
-                <line x1="44" y1="55" x2="30" y2="54" stroke="#FFFFFF" strokeWidth="1.2" />
-                <line x1="44" y1="59" x2="28" y2="60" stroke="#FFFFFF" strokeWidth="1.2" />
-                {/* Right cheek */}
-                <line x1="96" y1="55" x2="110" y2="54" stroke="#FFFFFF" strokeWidth="1.2" />
-                <line x1="96" y1="59" x2="112" y2="60" stroke="#FFFFFF" strokeWidth="1.2" />
+                <line x1="44" y1="55" x2="30" y2="54" stroke="#FFFFFF" strokeWidth="1.2" opacity="0.95" />
+                <line x1="44" y1="59" x2="28" y2="60" stroke="#FFFFFF" strokeWidth="1.2" opacity="0.95" />
+                <line x1="96" y1="55" x2="110" y2="54" stroke="#FFFFFF" strokeWidth="1.2" opacity="0.95" />
+                <line x1="96" y1="59" x2="112" y2="60" stroke="#FFFFFF" strokeWidth="1.2" opacity="0.95" />
               </svg>
             </motion.div>
           ) : (
@@ -188,9 +223,20 @@ export default function Cat({ isAwake, onToggleWake }) {
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-full"
               >
+                <defs>
+                  <radialGradient id="furGradSleep" cx="45%" cy="40%" r="60%">
+                    <stop offset="0%" stopColor="#3E2227" />
+                    <stop offset="85%" stopColor="#1E0E10" />
+                  </radialGradient>
+                  <linearGradient id="platTopGradSleep" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#51171C" />
+                    <stop offset="100%" stopColor="#280A0D" />
+                  </linearGradient>
+                </defs>
+
                 {/* Tiered rectangular base */}
                 <rect x="16" y="123" width="108" height="9" rx="3.5" fill={platformBase} stroke={outlineColor} strokeWidth="2" />
-                <rect x="24" y="115" width="92" height="9" rx="2.5" fill={platformTop} stroke={outlineColor} strokeWidth="1.8" />
+                <rect x="24" y="115" width="92" height="9" rx="2.5" fill="url(#platTopGradSleep)" stroke={outlineColor} strokeWidth="1.8" />
 
                 {/* Curled sleeping blob */}
                 <path
@@ -198,27 +244,27 @@ export default function Cat({ isAwake, onToggleWake }) {
                      C 28,92 48,82 70,82
                      C 92,82 112,92 108,115
                      Z"
-                  fill={bodyColor}
+                  fill="url(#furGradSleep)"
                   stroke={outlineColor}
                   strokeWidth="3"
                   strokeLinejoin="round"
                 />
                 {/* ears peeking */}
-                <path d="M 46,84 Q 43,72 52,81 Z" fill={bodyColor} stroke={outlineColor} strokeWidth="2.5" strokeLinejoin="round" />
-                <path d="M 94,84 Q 97,72 88,81 Z" fill={bodyColor} stroke={outlineColor} strokeWidth="2.5" strokeLinejoin="round" />
+                <path d="M 46,84 Q 43,72 52,81 Z" fill="url(#furGradSleep)" stroke={outlineColor} strokeWidth="2.5" strokeLinejoin="round" />
+                <path d="M 94,84 Q 97,72 88,81 Z" fill="url(#furGradSleep)" stroke={outlineColor} strokeWidth="2.5" strokeLinejoin="round" />
 
                 {/* Curled tail wrapped around */}
                 <path
                   d="M 102,115 C 105,98 120,100 116,115"
-                  stroke={bodyColor}
+                  stroke="url(#furGradSleep)"
                   strokeWidth="7"
                   strokeLinecap="round"
                   fill="none"
                 />
 
                 {/* Sleeping closed eyes (pink accent) */}
-                <path d="M 52,96 Q 57,100 62,96" stroke={accentColor} strokeWidth="2" strokeLinecap="round" fill="none" />
-                <path d="M 78,96 Q 83,100 88,96" stroke={accentColor} strokeWidth="2" strokeLinecap="round" fill="none" />
+                <path d="M 52,96 Q 57,100 62,96" stroke={accentColor} strokeWidth="2.2" strokeLinecap="round" fill="none" />
+                <path d="M 78,96 Q 83,100 88,96" stroke={accentColor} strokeWidth="2.2" strokeLinecap="round" fill="none" />
 
                 {/* Zzz */}
                 <motion.path
