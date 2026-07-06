@@ -1,28 +1,45 @@
 export const featuredProjects = [
   {
-    id: "01",
-    title: "MSME-360",
-    subtitle: "AI-Powered Business Automation SaaS",
-    type: "Group Project",
-    problem: "Small businesses drown in unstructured receipts, invoices, and context-free data.",
-    myMove: "Built the RAG assistant and the OCR → LLM → structured-data pipeline.",
-    outcome: "Contextual insights on top of a business's own data + automated invoice ingestion.",
-    stack: ["React", "TypeScript", "Node.js", "MongoDB", "Groq API", "Express.js"],
-    liveUrl: null,
-    githubUrl: null
-  },
+  id: "01",
+  title: "MSME-360",
+  subtitle: "Unified Enterprise Platform",
+  type: "Group Project",
+  problem: "Small businesses struggle with fragmented records, manual invoice processing, and disconnected business data across multiple systems.",
+  myMove: "Built the AI Command Center with a RAG pipeline using Groq API, implemented OCR-based invoice ingestion, engineered strict multi-tenant data isolation, and integrated dual-sync persistence between MongoDB and Google Sheets.",
+  outcome: "Delivered an AI-powered business automation platform that provides contextual insights from private business data while automatically synchronizing vendors, inventory, and invoices across MongoDB and Google Sheets.",
+  stack: [
+    "React",
+    "TypeScript",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "Groq API",
+    "Tesseract.js",
+    "Google Sheets API",
+    "Tailwind CSS"
+  ],
+  liveUrl: "https://pbl-project-7.onrender.com/",
+  githubUrl: "https://github.com/reva-32/pbl_project"
+},
   {
-    id: "02",
-    title: "CineMatch",
-    subtitle: "AI Movie Recommendation System",
-    type: "Personal Project",
-    problem: "Existing recommenders reduce films to tags; taste lives between the tags.",
-    myMove: "Semantic engine over 4,800+ films — 5 metadata features → dense embeddings.",
-    outcome: "Compressed a 23M+ cell similarity matrix via BZ2 for Streamlit Cloud + 3-tier retry logic for zero-downtime poster fetching.",
-    stack: ["Python", "SentenceTransformers", "Scikit-learn", "Streamlit", "OMDb API"],
-    liveUrl: null,
-    githubUrl: null
-  },
+  id: "02",
+  title: "CineMatch",
+  subtitle: "Semantic AI Movie Recommender",
+  type: "Personal Project",
+  problem: "Traditional movie recommenders rely on keyword matching, leading to shallow recommendations while large similarity matrices are difficult to deploy on cloud platforms due to memory and file-size constraints.",
+  myMove: "Built a semantic recommendation engine using SentenceTransformers, engineered weighted feature embeddings for directors, cast, genres, and plot, compressed a 23M+ cell similarity matrix with BZ2 for cloud deployment, and implemented resilient OMDb poster fetching with 3-tier retry logic.",
+  outcome: "Delivered accurate context-aware movie recommendations for 4,800+ films through a deployed Streamlit application with optimized storage, fast inference, and reliable real-time poster retrieval.",
+  stack: [
+    "Python",
+    "SentenceTransformers",
+    "Scikit-learn",
+    "Pandas",
+    "Streamlit",
+    "OMDb API"
+  ],
+  liveUrl: "https://netfilx-movies-recommender.streamlit.app/",
+  githubUrl: "https://github.com/gargijoshi9/netflix-recommender"
+},
   {
     id: "03",
     title: "Carbon Emission Tracking System",
@@ -33,7 +50,7 @@ export const featuredProjects = [
     outcome: "A transparent, blockchain-backed platform to monitor and reduce industrial CO₂.",
     stack: ["React.js", "Next.js", "Node.js", "Cosmos DB", "Blockchain", "ML"],
     liveUrl: null,
-    githubUrl: null
+    githubUrl: "https://github.com/PCCOE-Carbon-Footprint"
   },
   {
     id: "04",
@@ -52,44 +69,64 @@ export const featuredProjects = [
 
 export const secondaryProjects = [
   {
-    id: "05",
-    title: "LogiBrain",
-    subtitle: "Distribution Supply Management System",
-    type: "Group Project",
-    description: "Inventory optimization with EOQ & ROP across a multi-warehouse network; Dijkstra's for optimal routing.",
-    stack: ["Python", "Flask", "SQLite", "Dijkstra's", "DSA"],
-    liveUrl: null,
-    githubUrl: null
-  },
+  id: "05",
+  title: "LogiBrain",
+  subtitle: "Supply Chain Optimization System",
+  type: "Group Project",
+  description: "A web-based supply chain optimization platform that combines EOQ, Reorder Point (ROP), and Dijkstra's algorithm to optimize inventory, transportation, and overall logistics costs. Contributed backend APIs and server-side business logic.",
+  stack: [
+    "Python",
+    "Flask",
+    "SQLite",
+    "EOQ",
+    "ROP",
+    "Dijkstra's Algorithm"
+  ],
+  liveUrl: null,
+  githubUrl: "https://github.com/nudaadeshmukh/LogiBrain"
+},
   {
-    id: "06",
-    title: "Orange",
-    subtitle: "Details coming soon",
-    type: "Project",
-    description: "// TODO: details forthcoming",
-    stack: [],
-    liveUrl: null,
-    githubUrl: null
-  },
+  id: "06",
+  title: "Orange",
+  subtitle: "Accessible Language Learning Web App",
+  type: "Personal Project",
+  description: "A login-free language learning platform featuring interactive exercises, instant feedback, XP & hearts gamification, and full accessibility support for an engaging learning experience.",
+  stack: [
+    "HTML5",
+    "CSS3",
+    "JavaScript",
+    "Accessibility (WCAG)"
+  ],
+  liveUrl: "https://starlit-palmier-fbc80f.netlify.app/",
+  githubUrl: "https://github.com/gargijoshi9/orange-"
+},
   {
-    id: "07",
-    title: "AI Loan Sales Chatbot",
-    subtitle: "EY Techathon · Round 2",
-    type: "Private Repository",
-    isPrivate: true,
-    description: "Multi-agent conversational AI automating personal loan workflows — eligibility, verification, approval.",
-    stack: ["Python", "LLMs", "Multi-Agent"],
-    liveUrl: null,
-    githubUrl: null
-  },
-  {
-    id: "08",
-    title: "AI-Powered Plagiarism & Authentication Detector",
-    subtitle: "Details coming soon",
-    type: "Project",
-    description: "// TODO: details forthcoming",
-    stack: [],
-    liveUrl: null,
-    githubUrl: null
-  }
+  id: "07",
+  title: "Next-Gen Personal Loan AI Platform",
+  subtitle: "Agentic AI for Loan Origination",
+  type: "Private Repository",
+  isPrivate: true,
+  description: "An AI-powered conversational loan origination platform that automates eligibility assessment, KYC verification, personalized loan negotiation, and real-time sanction decisions through an intelligent multi-agent workflow.",
+  stack: [
+    "React",
+    "TypeScript",
+    "Python",
+    "Flask",
+    "SQLite",
+    "Gemini API",
+    "spaCy"
+  ],
+  liveUrl: null,
+  githubUrl: null
+}
+  // {
+  //   id: "08",
+  //   title: "AI-Powered Plagiarism & Authentication Detector",
+  //   subtitle: "Details coming soon",
+  //   type: "Project",
+  //   description: "// TODO: details forthcoming",
+  //   stack: [],
+  //   liveUrl: null,
+  //   githubUrl: null
+  // }
 ];

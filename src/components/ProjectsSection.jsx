@@ -56,7 +56,7 @@ export default function ProjectsSection() {
               className="overflow-hidden"
             >
               {/* Secondary Projects Upper Toggle Button (as in Image 1) */}
-              <div className="flex justify-start mb-6">
+              {/* <div className="flex justify-center mb-6">
                 <button
                   onClick={() => setShowSecondary(false)}
                   className="px-5 py-2 bg-accent text-white rounded-full font-mono text-xs flex items-center space-x-2 transition-all hover:bg-accent-hover shadow-sm"
@@ -64,17 +64,17 @@ export default function ProjectsSection() {
                   <span>Hide more projects</span>
                   <ChevronUp size={14} />
                 </button>
-              </div>
+              </div> */}
 
               {/* Secondary Projects Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {secondaryProjects.map((project) => (
                   <ProjectCard key={project.id} project={project} isFeatured={false} />
                 ))}
               </div>
 
               {/* Secondary Projects Lower Toggle Button (as in Image 4) */}
-              <div className="flex justify-start mt-6">
+              <div className="flex justify-center mt-6">
                 <button
                   onClick={() => setShowSecondary(false)}
                   className="px-5 py-2 bg-accent text-white rounded-full font-mono text-xs flex items-center space-x-2 transition-all hover:bg-accent-hover shadow-sm"

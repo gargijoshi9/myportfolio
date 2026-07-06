@@ -44,7 +44,7 @@ export default function ProjectCard({ project, isFeatured }) {
       transition={{ duration: 0.5 }}
       whileHover={{ y: -4, boxShadow: "0 12px 30px -10px rgba(43, 20, 24, 0.08)" }}
       className={`relative bg-cream-surface border border-cream-border rounded-2xl p-6 md:p-8 flex flex-col justify-between transition-all duration-200 ${
-        isFeatured ? "col-span-1 md:col-span-2 min-h-[380px]" : "col-span-1 min-h-[300px]"
+        isFeatured ? "col-span-1 min-h-[380px]" : "col-span-1 min-h-[300px]"
       }`}
     >
       <div>

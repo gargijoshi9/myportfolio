@@ -54,11 +54,11 @@ export default function Navbar() {
         <a href="#hero" onClick={(e) => handleLinkClick(e, "#hero")} className="flex items-center space-x-1 font-mono text-lg font-bold tracking-tight">
           <span className="text-hero-text">gargi</span>
           <span className="text-hero-rose">.init()</span>
-          <motion.span
+          {/* <motion.span
             animate={{ opacity: [1, 0] }}
             transition={{ repeat: Infinity, duration: 0.8, ease: "steps(2)" }}
             className="w-[8px] h-[18px] bg-hero-rose inline-block ml-0.5"
-          />
+          /> */}
         </a>
 
         {/* Desktop Menu */}

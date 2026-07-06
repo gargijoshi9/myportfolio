@@ -46,13 +46,13 @@ export default function Hero() {
           {/* Terminal Input Line */}
           <div className="font-mono text-xs md:text-sm text-hero-rose/55 mb-6 md:mb-8 space-y-1">
             <div className="flex items-center space-x-2">
-              <span>~/château-cyber</span>
+              <span>~/your-truly</span>
               <span className="opacity-60">•</span>
               <span>zsh</span>
             </div>
             <div className="flex items-center space-x-1.5 text-hero-rose/85">
               <span>$</span>
-              <span>cat ./gargi.txt</span>
+              <span>./gargi.txt</span>
             </div>
           </div>
 
@@ -75,17 +75,17 @@ export default function Hero() {
           {/* Subtitle Description */}
           <p className="text-base sm:text-lg font-sans max-w-xl mb-8 leading-relaxed">
             <span className="text-white/90">
-              Full-Stack & AI Engineer building intelligent, human-scale software.
+              Full-Stack & AI Engineer who ships intelligent, high-scale software.
             </span>
             <span className="text-hero-rose">
-              {" "}Currently studying IT (AI/ML + full-stack) at PICT Pune.
+              {" "}Currently pursuing BTech in IT at PICT Pune.
             </span>
           </p>
 
           {/* Monospace Indicator */}
           <div className="font-mono text-sm text-hero-rose mb-10 flex items-center space-x-2">
             <span className="text-hero-rose/70">&gt;</span>
-            <span className="font-semibold text-white/95">Full-Stack & AI Engineer</span>
+            <span className="font-semibold text-white/95">Full-Stack & AI Engineer & Full Time Student</span>
           </div>
 
           {/* CTAs / Buttons */}
