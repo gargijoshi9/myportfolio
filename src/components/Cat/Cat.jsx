@@ -93,7 +93,7 @@ export default function Cat({ isAwake, onToggleWake }) {
                 <defs>
                   {/* Fur Radial Gradient for 3D Volume */}
                   <radialGradient id="furGradient" cx="45%" cy="40%" r="60%" fx="35%" fy="30%">
-                    <stop offset="0%" stopColor="#3E2227" />
+                    <stop offset="0%" stopColor="#46242aff" />
                     <stop offset="70%" stopColor="#221215" />
                     <stop offset="100%" stopColor="#120709" />
                   </radialGradient>
@@ -164,7 +164,7 @@ export default function Cat({ isAwake, onToggleWake }) {
                 <ellipse cx="84" cy="116" rx="5" ry="3" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="2" />
 
                 {/* Stacked circular head with 3D gradient */}
-                <circle cx="70" cy="52" r="22" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="3" />
+                <circle cx="70" cy="52" r="24" fill="url(#furGradient)" stroke={outlineColor} strokeWidth="3" />
 
                 {/* Sharply pointed ears with reddish-pink inner triangles */}
                 {/* Left Ear */}

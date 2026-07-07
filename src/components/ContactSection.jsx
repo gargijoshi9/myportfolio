@@ -40,6 +40,7 @@ export default function ContactSection() {
   const currentYear = new Date().getFullYear();
 
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [formStatus, setFormStatus] = useState(null); // null, 'sending', 'success', 'error'
 
   const handleContactClick = (e, contact) => {
     if (contact.name === "/EMAIL") {
@@ -53,31 +54,57 @@ export default function ContactSection() {
     }
   };
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    // Honeypot check
+    if (formData.get("botcheck")) {
+      setFormStatus("success");
+      e.target.reset();
+      return;
+    }
+
+    setFormStatus("sending");
+    formData.append("access_key", "4be24801-1f4a-4f1c-b979-56e282026dac");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.success) {
+        setFormStatus("success");
+        e.target.reset();
+      } else {
+        setFormStatus("error");
+      }
+    } catch (err) {
+      console.error("Contact form error:", err);
+      setFormStatus("error");
+    }
+  };
+
   const contacts = [
     {
       name: "/EMAIL",
-      href: "mailto:gargijoshi0902@gmail.com", // sensible default or placeholder
+      href: "mailto:gargijoshi0902@gmail.com",
       icon: <Mail className="w-5 h-5 text-hero-rose" />,
       desc: "Get in touch directly"
     },
     {
       name: "/LINKEDIN",
-      href: "https://www.linkedin.com/in/gargi-joshi-a9246b331/", // placeholder
+      href: "https://www.linkedin.com/in/gargi-joshi-a9246b331/",
       icon: <LinkedinIcon className="w-5 h-5 text-hero-rose" />,
       desc: "Connect professionally"
     },
     {
       name: "/GITHUB",
-      href: "https://github.com/gargijoshi9", // placeholder
+      href: "https://github.com/gargijoshi9",
       icon: <GithubIcon className="w-5 h-5 text-hero-rose" />,
       desc: "Explore repositories"
     },
-    // {
-    //   name: "/LEETCODE",
-    //   href: "https://leetcode.com/u/gargi_25/", // placeholder
-    //   icon: <Code className="w-5 h-5 text-hero-rose" />,
-    //   desc: "Problem solving profile"
-    // },
     {
       name: "/RESUME.PDF",
       href: resumePdf,
@@ -107,47 +134,130 @@ export default function ContactSection() {
           </motion.div>
         </div>
 
-        {/* Links Grid (Balanced 4-column layout centered) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-20 max-w-5xl w-full mx-auto">
-          {contacts.map((contact, index) => (
-            <motion.a
-              key={contact.name}
-              href={contact.href}
-              target={contact.href.startsWith("mailto:") ? undefined : "_blank"}
-              rel={contact.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-              download={contact.name === "/RESUME.PDF" ? "Gargi_Joshi_Resume.pdf" : undefined}
-              onClick={(e) => handleContactClick(e, contact)}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              whileHover={{ y: -4, borderColor: "rgba(232, 180, 188, 0.6)", backgroundColor: "rgba(58, 20, 24, 0.9)" }}
-              className="flex flex-col items-center justify-center text-center p-6 border border-hero-rose/25 bg-hero-bg/50 rounded-xl transition-all duration-200 group h-[150px] relative cursor-pointer"
-            >
-              <div className="absolute top-4 right-4">
-                {contact.name === "/RESUME.PDF" ? (
-                  <Download className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
-                ) : (
-                  <ArrowUpRight className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
+        {/* Contact Main Grid (Form + Links) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 max-w-5xl w-full mx-auto items-stretch">
+          {/* Contact Form Column (60% / col-span-7) */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-7 w-full flex"
+          >
+            <form onSubmit={handleFormSubmit} className="flex flex-col gap-6 p-6 md:p-8 border border-hero-rose/25 bg-hero-bg/50 rounded-xl w-full">
+              {/* Botcheck Honeypot */}
+              <input type="text" name="botcheck" className="hidden" style={{ display: "none" }} />
+              
+              <div className="flex flex-col">
+                <label htmlFor="name" className="font-mono text-xs font-semibold tracking-wider text-hero-rose mb-2">
+                  /NAME
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  className="px-4 py-3 bg-[#3a1418] border border-hero-rose/25 focus:border-hero-rose focus:ring-1 focus:ring-hero-rose text-white rounded-lg outline-none font-sans transition-all duration-200"
+                  placeholder="Enter your name"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label htmlFor="email" className="font-mono text-xs font-semibold tracking-wider text-hero-rose mb-2">
+                  /EMAIL
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  className="px-4 py-3 bg-[#3a1418] border border-hero-rose/25 focus:border-hero-rose focus:ring-1 focus:ring-hero-rose text-white rounded-lg outline-none font-sans transition-all duration-200"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label htmlFor="message" className="font-mono text-xs font-semibold tracking-wider text-hero-rose mb-2">
+                  /MESSAGE
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={4}
+                  className="px-4 py-3 bg-[#3a1418] border border-hero-rose/25 focus:border-hero-rose focus:ring-1 focus:ring-hero-rose text-white rounded-lg outline-none font-sans transition-all duration-200 resize-none"
+                  placeholder="Write your message here..."
+                />
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <button
+                  type="submit"
+                  disabled={formStatus === "sending"}
+                  className="px-6 py-2.5 bg-hero-rose text-hero-bg font-mono text-xs font-bold rounded-full hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-250 flex items-center justify-center space-x-1.5 shadow-md cursor-pointer"
+                >
+                  <span>{formStatus === "sending" ? "sending..." : "send_message()"}</span>
+                </button>
+
+                {formStatus === "success" && (
+                  <span className="text-green-400 font-mono text-xs flex items-center">
+                    ✓ got it — I'll reply soon.
+                  </span>
+                )}
+
+                {formStatus === "error" && (
+                  <span className="text-red-400 font-mono text-xs flex items-center">
+                    ✗ something broke — email me directly.
+                  </span>
                 )}
               </div>
-              <div className="p-2.5 bg-hero-bg border border-hero-rose/10 rounded-full mb-3">
-                {contact.icon}
-              </div>
-              <div>
-                <span className="font-mono text-sm font-semibold tracking-wider text-hero-rose block mb-1">
-                  {contact.name}
-                </span>
-                <span className="text-hero-text/60 text-xs font-sans">
-                  {contact.name === "/EMAIL" && copiedEmail ? (
-                    <span className="text-green-400 font-semibold font-mono">Copied to clipboard!</span>
-                  ) : (
-                    contact.desc
-                  )}
-                </span>
-              </div>
-            </motion.a>
-          ))}
+            </form>
+          </motion.div>
+
+          {/* Links Column (40% / col-span-5) */}
+          <div className="lg:col-span-5 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 h-full">
+              {contacts.map((contact, index) => (
+                <motion.a
+                  key={contact.name}
+                  href={contact.href}
+                  target={contact.href.startsWith("mailto:") ? undefined : "_blank"}
+                  rel={contact.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                  download={contact.name === "/RESUME.PDF" ? "Gargi_Joshi_Resume.pdf" : undefined}
+                  onClick={(e) => handleContactClick(e, contact)}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  whileHover={{ y: -4, borderColor: "rgba(232, 180, 188, 0.6)", backgroundColor: "rgba(58, 20, 24, 0.9)" }}
+                  className="flex flex-col items-center justify-center text-center p-6 border border-hero-rose/25 bg-hero-bg/50 rounded-xl transition-all duration-200 group min-h-[140px] lg:h-full relative cursor-pointer"
+                >
+                  <div className="absolute top-4 right-4">
+                    {contact.name === "/RESUME.PDF" ? (
+                      <Download className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
+                    ) : (
+                      <ArrowUpRight className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
+                    )}
+                  </div>
+                  <div className="p-2.5 bg-hero-bg border border-hero-rose/10 rounded-full mb-3">
+                    {contact.icon}
+                  </div>
+                  <div>
+                    <span className="font-mono text-sm font-semibold tracking-wider text-hero-rose block mb-1">
+                      {contact.name}
+                    </span>
+                    <span className="text-hero-text/60 text-xs font-sans">
+                      {contact.name === "/EMAIL" && copiedEmail ? (
+                        <span className="text-green-400 font-semibold font-mono">Copied to clipboard!</span>
+                      ) : (
+                        contact.desc
+                      )}
+                    </span>
+                  </div>
+                </motion.a>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Footer info */}

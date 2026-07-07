@@ -1,7 +1,7 @@
 export const theme = {
   colors: {
     // Dark sections (Hero, Contact/Footer) only
-    heroBackground: "#3a1418",
+    heroBackground: "#49191eff",
     heroOverlay: "rgba(58, 20, 24, 0.75)",
     heroText: "#FFFFFF",
     heroTextSecondary: "#E8B4BC",

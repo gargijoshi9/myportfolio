@@ -74,7 +74,7 @@ export default function ProjectCard({ project, isFeatured }) {
           <h3 className="text-2xl font-heading font-bold text-text-primary leading-tight">
             {title}
           </h3>
-          <p className="text-sm font-serif italic text-text-secondary mt-1">
+          <p className="text-sm font-sans text-text-secondary mt-1">
             {subtitle}
           </p>
         </div>
