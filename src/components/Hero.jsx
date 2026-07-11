@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
 import resumePdf from "../data/Gargi_Resume.pdf";
+import headshotDuotone from "../assets/headshot_duotone.png";
+
 
 export default function Hero() {
   const [blink, setBlink] = useState(true);
@@ -146,19 +148,16 @@ export default function Hero() {
               <div className="w-12" /> {/* spacing placeholder */}
             </div>
 
-            {/* Inner Profile Image Placeholder */}
-            <div className="aspect-[4/4] w-full bg-gradient-to-br from-[#3a1418] to-[#1e0a0c] rounded-xl flex flex-col items-center justify-center border border-hero-rose/10 relative overflow-hidden p-6 mb-5 group">
-              {/* GJ Text */}
-              <div className="text-5xl sm:text-6xl font-serif italic text-hero-rose/85 tracking-wider select-none mb-3 transform group-hover:scale-105 transition-transform duration-300">
-                GJ
-              </div>
+            {/* Inner Profile Image */}
+            <div className="aspect-[4/4] w-full bg-gradient-to-br from-[#3a1418] to-[#1e0a0c] rounded-xl border border-hero-rose/15 relative overflow-hidden mb-5 group">
+              <img
+                src={headshotDuotone}
+                alt="Gargi Joshi"
+                className="w-full h-full object-cover grayscale contrast-125 brightness-95 group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+              />
               
-              <div className="font-mono text-[10px] text-hero-rose/40 uppercase tracking-widest select-none">
-                [ portrait.png — pending upload ]
-              </div>
-
-              {/* Ambient decoration */}
-              <div className="absolute inset-0 bg-radial-[circle_at_center,_var(--color-hero-rose)_0%,_transparent_75%] opacity-[0.04]" />
+              {/* Subtle overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#2B1418]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </div>
 
             {/* Monospace Metadata Table */}
