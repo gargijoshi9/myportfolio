@@ -8,6 +8,7 @@ import CatPopup from "./CatPopup";
 export default function Cat({ isAwake, onToggleWake }) {
   const [showPopup, setShowPopup] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
+  const [clickTrigger, setClickTrigger] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const catRef = useRef(null);
 
@@ -45,6 +46,7 @@ export default function Cat({ isAwake, onToggleWake }) {
     if (!isAwake) return;
     setIsJumping(true);
     setShowPopup(true);
+    setClickTrigger(prev => prev + 1);
     setTimeout(() => {
       setIsJumping(false);
     }, 500);
@@ -66,7 +68,7 @@ export default function Cat({ isAwake, onToggleWake }) {
       {/* Fact Popup bubble */}
       <AnimatePresence>
         {isAwake && showPopup && (
-          <CatPopup onClose={() => setShowPopup(false)} />
+          <CatPopup onClose={() => setShowPopup(false)} clickTrigger={clickTrigger} />
         )}
       </AnimatePresence>
 

@@ -1,10 +1,15 @@
 export const catFacts = [
-  "Cats spend 70% of their lives sleeping. That's a lot of background CPU idle time.",
-  "A cat's brain has 1000 times more data storage than an iPad. Multi-agent processing built-in.",
-  "Cats make about 100 different vocal sounds. Dogs make only about 10. Superior API protocols.",
-  "The first computer bug was a real moth found in a relay. Cats have been debugging bugs for centuries.",
-  "Cats use their whiskers to detect if they can fit through spaces. Basically a physical ping command.",
-  "Isaac Newton is credited with inventing the cat door. Even physicists need an interrupt handler.",
-  "Cats have 32 muscles in each ear. That's a highly sophisticated directional audio array.",
-  "A cat's purr has a frequency of 25-150 Hz, which is known to improve bone density and heal muscles."
+  "I run on tea, not coffee — chai first, code after.",
+  "Badminton is my favorite way to debug a bad day.",
+  "I've watched way too much anime to admit in one bio line.",
+  "Ask me anything about Harry Potter — I will have an answer.",
+  "Romcoms are my comfort watch. No shame.",
+  "Give me a random historical fact and I'm hooked for an hour.",
+  "I'm a certified cat person — you may have noticed.",
+  "Taylor Swift is basically my background process, always running.",
+  "When I'm not coding, I'm probably drawing or painting (check out /art).",
+  "Art and craft calm my brain the way clean code does.",
+  "I make my best decisions under pressure — deadlines don't scare me.",
+  "Problem-solving is my favorite kind of puzzle, on-screen or off.",
+  "I stay steady under stress. The cat gets some credit for that.",
 ];

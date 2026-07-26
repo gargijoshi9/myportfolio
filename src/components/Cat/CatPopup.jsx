@@ -4,7 +4,7 @@ import { X, Trophy } from "lucide-react";
 import { catFacts } from "../../data/catFacts";
 import { catTheme } from "../../config/catTheme";
 
-export default function CatPopup({ onClose }) {
+export default function CatPopup({ onClose, clickTrigger }) {
   const containerRef = useRef(null);
   const [fact, setFact] = useState("");
   const [playCount, setPlayCount] = useState(0);
@@ -16,11 +16,15 @@ export default function CatPopup({ onClose }) {
   const yarnX = useMotionValue(0);
   const yarnY = useMotionValue(0);
 
-  // Select a random fact on mount
+  // Select a random fact on mount or whenever cat is clicked
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * catFacts.length);
-    setFact(catFacts[randomIndex]);
-  }, []);
+    setFact((prevFact) => {
+      const availableFacts = catFacts.filter((f) => f !== prevFact);
+      const listToSelectFrom = availableFacts.length > 0 ? availableFacts : catFacts;
+      const randomIndex = Math.floor(Math.random() * listToSelectFrom.length);
+      return listToSelectFrom[randomIndex];
+    });
+  }, [clickTrigger]);
 
   // Monitor yarn position to trigger "batting" animation
   useEffect(() => {
