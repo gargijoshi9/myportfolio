@@ -41,6 +41,7 @@ export default function ContactSection() {
 
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [formStatus, setFormStatus] = useState(null); // null, 'sending', 'success', 'error'
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   const handleContactClick = (e, contact) => {
     if (contact.name === "/EMAIL") {
@@ -51,6 +52,8 @@ export default function ContactSection() {
       
       // Fallback: trigger mailto compose window
       window.location.href = contact.href;
+    } else if (contact.name === "/RESUME.PDF") {
+      setIsResumeOpen(!isResumeOpen);
     }
   };
 
@@ -109,7 +112,7 @@ export default function ContactSection() {
       name: "/RESUME.PDF",
       href: resumePdf,
       icon: <FileText className="w-5 h-5 text-hero-rose" />,
-      desc: "Download curriculum vitae"
+      desc: isResumeOpen ? "Click to collapse preview" : "Click to view preview"
     }
   ];
 
@@ -217,48 +220,90 @@ export default function ContactSection() {
           {/* Links Column (40% / col-span-5) */}
           <div className="lg:col-span-5 w-full">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 h-full">
-              {contacts.map((contact, index) => (
-                <motion.a
-                  key={contact.name}
-                  href={contact.href}
-                  target={contact.href.startsWith("mailto:") ? undefined : "_blank"}
-                  rel={contact.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                  download={contact.name === "/RESUME.PDF" ? "Gargi_Joshi_Resume.pdf" : undefined}
-                  onClick={(e) => handleContactClick(e, contact)}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  whileHover={{ y: -4, borderColor: "rgba(232, 180, 188, 0.6)", backgroundColor: "rgba(58, 20, 24, 0.9)" }}
-                  className="flex flex-col items-center justify-center text-center p-6 border border-hero-rose/25 bg-hero-bg/50 rounded-xl transition-all duration-200 group min-h-[140px] lg:h-full relative cursor-pointer"
-                >
-                  <div className="absolute top-4 right-4">
-                    {contact.name === "/RESUME.PDF" ? (
-                      <Download className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
-                    ) : (
-                      <ArrowUpRight className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
-                    )}
-                  </div>
-                  <div className="p-2.5 bg-hero-bg border border-hero-rose/10 rounded-full mb-3">
-                    {contact.icon}
-                  </div>
-                  <div>
-                    <span className="font-mono text-sm font-semibold tracking-wider text-hero-rose block mb-1">
-                      {contact.name}
-                    </span>
-                    <span className="text-hero-text/60 text-xs font-sans">
-                      {contact.name === "/EMAIL" && copiedEmail ? (
-                        <span className="text-green-400 font-semibold font-mono">Copied to clipboard!</span>
+              {contacts.map((contact, index) => {
+                const isResume = contact.name === "/RESUME.PDF";
+                const CardComponent = isResume ? motion.div : motion.a;
+                return (
+                  <CardComponent
+                    key={contact.name}
+                    href={isResume ? undefined : contact.href}
+                    target={isResume ? undefined : (contact.href.startsWith("mailto:") ? undefined : "_blank")}
+                    rel={isResume ? undefined : (contact.href.startsWith("mailto:") ? undefined : "noopener noreferrer")}
+                    onClick={(e) => handleContactClick(e, contact)}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    whileHover={{ y: -4, borderColor: "rgba(232, 180, 188, 0.6)", backgroundColor: "rgba(58, 20, 24, 0.9)" }}
+                    className="flex flex-col items-center justify-center text-center p-6 border border-hero-rose/25 bg-hero-bg/50 rounded-xl transition-all duration-200 group min-h-[140px] lg:h-full relative cursor-pointer select-none"
+                  >
+                    <div className="absolute top-4 right-4 z-10">
+                      {isResume ? (
+                        <a
+                          href={contact.href}
+                          download="Gargi_Joshi_Resume.pdf"
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-1.5 hover:bg-hero-rose/25 rounded transition-all duration-250 group/download inline-flex items-center justify-center"
+                          title="Download Resume"
+                        >
+                          <Download className="w-4 h-4 text-hero-rose/60 group-hover/download:text-hero-rose transition-colors duration-200" />
+                        </a>
                       ) : (
-                        contact.desc
+                        <ArrowUpRight className="w-4 h-4 text-hero-rose/40 group-hover:text-hero-rose transition-colors duration-200" />
                       )}
-                    </span>
-                  </div>
-                </motion.a>
-              ))}
+                    </div>
+                    <div className="p-2.5 bg-hero-bg border border-hero-rose/10 rounded-full mb-3">
+                      {contact.icon}
+                    </div>
+                    <div>
+                      <span className="font-mono text-sm font-semibold tracking-wider text-hero-rose block mb-1">
+                        {contact.name}
+                      </span>
+                      <span className="text-hero-text/60 text-xs font-sans">
+                        {contact.name === "/EMAIL" && copiedEmail ? (
+                          <span className="text-green-400 font-semibold font-mono">Copied to clipboard!</span>
+                        ) : (
+                          contact.desc
+                        )}
+                      </span>
+                    </div>
+                  </CardComponent>
+                );
+              })}
             </div>
           </div>
         </div>
+
+        {/* Resume Preview Iframe */}
+        {isResumeOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            className="w-full max-w-5xl mx-auto mb-16 border border-hero-rose/25 bg-hero-bg/30 rounded-xl p-2 overflow-hidden shadow-2xl"
+          >
+            <div className="flex justify-between items-center px-4 py-2 border-b border-hero-rose/10 mb-2">
+              <span className="font-mono text-xs text-hero-rose/80">
+                Gargi_Joshi_Resume.pdf
+              </span>
+              <a
+                href={resumePdf}
+                download="Gargi_Joshi_Resume.pdf"
+                className="font-mono text-xs text-hero-rose hover:text-white flex items-center space-x-1 transition-colors"
+              >
+                <Download className="w-3.5 h-3.5" />
+                <span>Download Copy</span>
+              </a>
+            </div>
+            <div className="w-full h-[600px] md:h-[800px] rounded-lg overflow-hidden bg-[#2b1013]">
+              <iframe
+                src={`${resumePdf}#toolbar=1`}
+                className="w-full h-full border-none"
+                title="Gargi Joshi Resume Preview"
+              />
+            </div>
+          </motion.div>
+        )}
 
         {/* Footer info */}
         <div className="border-t border-hero-rose/15 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 font-mono text-xs md:text-sm text-hero-rose/65">
