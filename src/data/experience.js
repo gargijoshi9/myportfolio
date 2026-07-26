@@ -19,7 +19,7 @@ export const experiences = [
     type: "Open Source",
     duration: "Aug 2025 – Nov 2025",
     bullets: [
-      "Resolved 12+ UI inconsistencies across 8 React components, improving responsiveness by 30%.",
+      "Resolved 12+ UI inconsistencies across 8 React components, improving responsiveness by 40%.",
       "Shipped 2 production-merged PRs, reducing downstream bug reports by 40%."
     ]
   }
