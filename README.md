@@ -1,6 +1,6 @@
 # Gargi Joshi — Developer Portfolio
 
-Welcome to my portfolio! This is a modern, single-page interactive site designed to highlight my work as a Full-Stack & AI Engineer and IT student at PICT Pune. It is built to feel fast, premium, and visually alive.
+Welcome to my portfolio! This is a modern, single-page interactive site designed to highlight my work as an AI/ML & Full-Stack Engineer and IT student at PICT Pune. It is built to feel fast, premium, and visually alive.
 
 ---
 

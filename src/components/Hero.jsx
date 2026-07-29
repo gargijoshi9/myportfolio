@@ -91,7 +91,7 @@ export default function Hero() {
           {/* Subtitle Description */}
           <p className="text-base sm:text-lg font-sans max-w-xl mb-8 leading-relaxed">
             <span className="text-white/90">
-              Full-Stack & AI Engineer who ships intelligent, high-scale software.
+              AI/ML & Full-Stack Engineer who ships intelligent, high-scale software.
             </span>
             <span className="text-hero-rose">
               {" "}Currently pursuing BTech in IT at PICT Pune.
@@ -101,7 +101,7 @@ export default function Hero() {
           {/* Monospace Indicator */}
           <div className="font-mono text-sm text-hero-rose mb-10 flex items-center space-x-2">
             <span className="text-hero-rose/70">&gt;</span>
-            <span className="font-semibold text-white/95">Full-Stack & AI Engineer & Full Time Student</span>
+            <span className="font-semibold text-white/95">AI/ML & Full-Stack Engineer & Full Time Student</span>
           </div>
 
           {/* CTAs / Buttons */}
