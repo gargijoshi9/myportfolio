@@ -1,7 +1,7 @@
 export const achievements = [
   {
     title: "BOI Hackathon 2026 — Phase II Finalist",
-    description: "MuleRadar (AI Money Mule Detection) — Top 70 teams nationwide.",
+    description: "MuleRadar (AI Money Mule Detection) — Top 31 teams nationwide.",
     iconType: "trophy" // custom handling for trophy icon
   },
   {
