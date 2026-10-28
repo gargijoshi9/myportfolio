@@ -57,7 +57,7 @@ export default function ProjectCard({ project, isFeatured }) {
             {isInProgress && (
               <span className="ml-2 px-2 py-0.5 bg-accent/10 text-accent font-semibold text-[10px] rounded-full flex items-center gap-1 border border-accent/20">
                 <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
-                in progress
+                Ongoing
               </span>
             )}
             {isPrivate && (
@@ -139,6 +139,9 @@ export default function ProjectCard({ project, isFeatured }) {
           <div className="flex space-x-3 font-mono text-xs">
             <a
               href={liveUrl || "#"}
+              target={liveUrl ? "_blank" : undefined}
+              rel={liveUrl ? "noopener noreferrer" : undefined}
+              aria-label={liveUrl ? `View live demo of ${title}` : `Live demo for ${title} coming soon`}
               onClick={(e) => !liveUrl && e.preventDefault()}
               className={`px-3 py-1.5 rounded-lg border transition-all flex items-center space-x-1.5 ${
                 liveUrl
@@ -152,6 +155,9 @@ export default function ProjectCard({ project, isFeatured }) {
 
             <a
               href={githubUrl || "#"}
+              target={githubUrl ? "_blank" : undefined}
+              rel={githubUrl ? "noopener noreferrer" : undefined}
+              aria-label={githubUrl ? `View source code for ${title} on GitHub` : `GitHub repository for ${title} coming soon`}
               onClick={(e) => !githubUrl && e.preventDefault()}
               className={`px-3 py-1.5 rounded-lg border transition-all flex items-center space-x-1.5 ${
                 githubUrl

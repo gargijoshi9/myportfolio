@@ -19,7 +19,7 @@ export const featuredProjects = [
       "NextAuth"
     ],
     liveUrl: "https://unified-workspace.vercel.app/",
-    githubUrl: "https://github.com/gargijoshi9"
+    githubUrl: "https://github.com/gargijoshi9/unified-workspace"
   },
   {
     id: "02",
@@ -67,38 +67,71 @@ export const featuredProjects = [
       "Three.js"
     ],
     liveUrl: "https://corkscrew-sih-26.vercel.app/",
-    githubUrl: "https://github.com/gargijoshi9"
+    githubUrl: "https://github.com/gargijoshi9/corkscrew"
   },
   {
     id: "04",
-    title: "MSME-360",
-    subtitle: "Unified Enterprise Platform",
-    type: "Group Project",
+    title: "MetricWatch",
+    subtitle: "Business Metric Monitoring & Anomaly Detection",
+    type: "AI / Analytics",
+    isInProgress: true,
     problem:
-      "Small businesses juggle invoices, vendors, and inventory across disconnected systems.",
+      "Business teams need to detect unusual changes in important metrics and understand potential causes quickly.",
     myMove:
-      "Built an AI-powered RAG assistant, OCR invoice pipeline, and Google Sheets ↔ MongoDB sync.",
+      "Built a monitoring pipeline that processes CSV/Excel data, detects anomalies using statistical baselines and z-scores, and uses an LLM to explain findings.",
     outcome:
-      "Automated invoice processing with contextual business insights from private data.",
+      "An AI-assisted metric-monitoring workflow that combines statistical anomaly detection with understandable explanations.",
     stack: [
-      "React",
-      "TypeScript",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "Groq API",
-      "Tesseract.js",
-      "Google Sheets API",
-      "Tailwind CSS"
+      "Python",
+      "FastAPI",
+      "Pandas",
+      "NumPy",
+      "Scikit-learn",
+      "LLM"
     ],
-    liveUrl: "https://pbl-project-7.onrender.com/",
-    githubUrl: "https://github.com/reva-32/pbl_project"
+    liveUrl: null,
+    githubUrl: "https://github.com/gargijoshi9/metricwatch"
   }
 ];
 
 export const secondaryProjects = [
   {
     id: "05",
+    title: "ExoScope",
+    subtitle: "Exoplanet Detection Using Machine Learning",
+    type: "ML / Astrophysics",
+    description:
+      "Machine learning model pipeline trained on planetary transit photometry datasets to identify exoplanet candidates and filter false positives with high precision.",
+    stack: [
+      "Python",
+      "Scikit-learn",
+      "LightGBM",
+      "Pandas",
+      "NumPy"
+    ],
+    liveUrl: null,
+    githubUrl: "https://github.com/gargijoshi9/exoplanet-detection"
+  },
+  {
+    id: "06",
+    title: "SlothMode",
+    subtitle: "Local-AI Productivity Assistant",
+    type: "Personal Project",
+    description:
+      "A gentle, local-AI assisted task planner combating task paralysis and burnout by breaking tasks into bite-sized subtasks and scheduling them around routines using Ollama & Gemma 3.",
+    stack: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Node.js",
+      "Express.js",
+      "Ollama"
+    ],
+    liveUrl: null,
+    githubUrl: "https://github.com/gargijoshi9/SlothMode"
+  },
+  {
+    id: "07",
     title: "CineMatch",
     subtitle: "Semantic AI Movie Recommender",
     type: "Personal Project",
@@ -115,75 +148,29 @@ export const secondaryProjects = [
     liveUrl: "https://netfilx-movies-recommender.streamlit.app/",
     githubUrl: "https://github.com/gargijoshi9/netflix-recommender"
   },
-  // {
-  //   id: "04",
-  //   title: "TFT Glucose Forecasting",
-  //   subtitle: "Temporal Fusion Transformer · OhioT1DM",
-  //   type: "Research",
-  //   isInProgress: true,
-  //   problem:
-  //     "Type-1 diabetes glucose curves are patient-specific — global models flatten personal behaviour.",
-  //   myMove:
-  //     "Global model vs. per-patient fine-tuning study on OhioT1DM.",
-  //   outcome:
-  //     "Measuring where personalization actually pays off in glycemic forecasts.",
-  //   stack: ["Python", "PyTorch", "Temporal Fusion Transformer", "OhioT1DM"],
-  //   liveUrl: null,
-  //   githubUrl: null
-  // }
-
-
-  // {
-  //   id: "05",
-  //   title: "Personal Loan AI Platform",
-  //   subtitle: "Agentic AI for Loan Origination",
-  //   type: "Group Project",
-  //   isPrivate: true,
-  //   description:
-  //     "An AI-powered conversational loan origination platform that automates eligibility assessment, KYC verification, personalized loan negotiation, and real-time sanction decisions through an intelligent multi-agent workflow.",
-  //   stack: [
-  //     "React",
-  //     "TypeScript",
-  //     "Python",
-  //     "Flask",
-  //     "SQLite",
-  //     "Gemini API",
-  //     "spaCy"
-  //   ],
-  //   liveUrl: null,
-  //   githubUrl: null
-  // },
-  {
-    id: "06",
-    title: "Carbon Emission Tracking System",
-    subtitle: "Blockchain + ML for industrial emissions",
-    type: "Group Project",
-    description:
-      "Industrial emissions are self-reported, uneven, and hard to audit at scale. Built an emission prediction model with a trend-forecasting layer for risk analysis, forming a transparent, blockchain-backed platform to monitor and reduce industrial CO₂.",
-    stack: ["React.js", "Next.js", "Node.js", "Cosmos DB", "Blockchain", "ML"],
-    liveUrl: null,
-    githubUrl: "https://github.com/PCCOE-Carbon-Footprint"
-  },
-  {
-    id: "07",
-    title: "LogiBrain",
-    subtitle: "Supply Chain Optimization System",
-    type: "Group Project",
-    description:
-      "A web-based supply chain optimization platform that combines EOQ, Reorder Point (ROP), and Dijkstra's algorithm to optimize inventory, transportation, and overall logistics costs. Contributed backend APIs and server-side business logic.",
-    stack: [
-      "Python",
-      "Flask",
-      "SQLite",
-      "EOQ",
-      "ROP",
-      "Dijkstra's Algorithm"
-    ],
-    liveUrl: null,
-    githubUrl: "https://github.com/nudaadeshmukh/LogiBrain"
-  },
   {
     id: "08",
+    title: "MSME-360",
+    subtitle: "Unified Enterprise Platform",
+    type: "Group Project",
+    description:
+      "Small businesses juggle invoices, vendors, and inventory across disconnected systems. Built an AI-powered RAG assistant, OCR invoice pipeline, and Google Sheets ↔ MongoDB sync for automated invoice processing.",
+    stack: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Groq API",
+      "Tesseract.js",
+      "Google Sheets API",
+      "Tailwind CSS"
+    ],
+    liveUrl: "https://pbl-project-7.onrender.com/",
+    githubUrl: "https://github.com/reva-32/pbl_project"
+  },
+  {
+    id: "09",
     title: "Orange",
     subtitle: "Accessible Language Learning Web App",
     type: "Personal Project",
@@ -197,5 +184,50 @@ export const secondaryProjects = [
     ],
     liveUrl: "https://starlit-palmier-fbc80f.netlify.app/",
     githubUrl: "https://github.com/gargijoshi9/orange-"
+  },
+  {
+    id: "10",
+    title: "Carbon Emission Tracking System",
+    subtitle: "Blockchain + ML for industrial emissions",
+    type: "Group Project",
+    description:
+      "Industrial emissions are self-reported, uneven, and hard to audit at scale. Built an emission prediction model with a trend-forecasting layer for risk analysis, forming a transparent, blockchain-backed platform to monitor and reduce industrial CO₂.",
+    stack: ["React.js", "Next.js", "Node.js", "Cosmos DB", "Blockchain", "ML"],
+    liveUrl: null,
+    githubUrl: "https://github.com/PCCOE-Carbon-Footprint"
   }
+  // {
+  //   id: "11",
+  //   title: "LogiBrain",
+  //   subtitle: "Supply Chain Optimization System",
+  //   type: "Group Project",
+  //   description:
+  //     "A web-based supply chain optimization platform that combines EOQ, Reorder Point (ROP), and Dijkstra's algorithm to optimize inventory, transportation, and overall logistics costs. Contributed backend APIs and server-side business logic.",
+  //   stack: [
+  //     "Python",
+  //     "Flask",
+  //     "SQLite",
+  //     "EOQ",
+  //     "ROP",
+  //     "Dijkstra's Algorithm"
+  //   ],
+  //   liveUrl: null,
+  //   githubUrl: "https://github.com/nudaadeshmukh/LogiBrain"
+  // },
+  // {
+  //   id: "08",
+  //   title: "Orange",
+  //   subtitle: "Accessible Language Learning Web App",
+  //   type: "Personal Project",
+  //   description:
+  //     "Award-winning login-free language learning platform (1st Place, IEEE TechRush 2025) featuring interactive exercises, instant feedback, XP & hearts gamification, and WCAG accessibility support.",
+  //   stack: [
+  //     "HTML5",
+  //     "CSS3",
+  //     "JavaScript",
+  //     "Accessibility (WCAG)"
+  //   ],
+  //   liveUrl: "https://starlit-palmier-fbc80f.netlify.app/",
+  //   githubUrl: "https://github.com/gargijoshi9/orange-"
+  // }
 ];
